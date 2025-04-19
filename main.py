@@ -14,7 +14,7 @@ def write():
         with open(FILENAME,'a') as fw:
             WRITE_SIZE= int(input("Please,Enter Number Of Students: "))
             for i in range(WRITE_SIZE):
-              print(f"\nEnter Details for student {i+1}:\n")
+              print(f"\nEnter Details for student {i+1}:")
               sname=input("Name: ")
               sroll=input("Roll: ")
               smarks=[]
@@ -59,11 +59,40 @@ def display(lines):
         sl += 1
     print("+----+------------------------------+--------+-------------------------------------------+--------+")
 
+def menu():
+  while True:
+    EXIT=4
+    print("\n1.Read Data")
+    print("2.Write Data")
+    print("3.Read & Write Data")
+    print(f"{EXIT}.Exit")
+    choice=int(input("Enter Your Choice: "))
+    if choice == 1:
+        read()
+        check(EXIT)
+    elif choice == 2:
+        write()
+        check(EXIT)
 
+    elif choice ==3:
+        write()
+        read()
+        check(EXIT)
+
+    elif choice ==EXIT :
+        print("GoodBye...")
+        break
+    else:
+        print("Invalid Choice")
+    
+def check(EXIT):
+    cs=(input(f"Press Any Key To Continue/{EXIT} To Exit."))
+    if cs == str(EXIT):
+        print("GoodBye...")
+        exit()
 def main():
-    # write()
-    read()
-
+    print("\n\n\tWelcome To StudentDB.")
+    menu()
 
 
 if __name__ =="__main__":
