@@ -1,6 +1,3 @@
-# Rea
-# Write
-#FILENAME
 FILENAME ="pyStudentDB\\data.txt"
 class Student:
     def __init__(self, name, roll, marks, grade,pof):
@@ -15,20 +12,46 @@ def write():
         with open(FILENAME,'a') as fw:
             WRITE_SIZE= int(input("Please,Enter Number Of Students: "))
             for i in range(WRITE_SIZE):
-              print(f"\nEnter Details for student {i+1}:")
-              sname=input("Name: ")
-              sroll=input("Roll: ")
-              smarks=[]
-              while(len(smarks)!=6):
-                print("Marks[PHY CHEM MATH IT ENG HINDI]: ")             
+                print(f"\nEnter Details for student {i+1}:")
+                while True:
+                    sname=input("Name: ")
+                    if sname:
+                        break
+                    elif (len(sname))<4:
+                        print("Name is too Short")
+                    elif any(char.isdigit() for char in sname):
+                        print("Name should not contain numbers.")
+                    else:
+                        print("Cannot Be Empty!!")
+                while True:
+                    sroll=input("Roll: ")
+                    if sroll:
+                        break
+                    elif not sroll.isalnum:
+                        print("Roll should be alphanumeric only")
+                    else:
+                        print("Cannot Be Empty!!")             
+                
+                smarks=[]
+                while True:
+                    try:
+                        smark = input("Marks [PHY CHEM MATH IT ENG HINDI]: ").strip()
+                        smarks = [float(x) for x in smark.split()]
+                        if len(smarks) != 6:
+                            print("Please enter exactly 6 marks.")
+                            continue
+                        if not all(0 <= mark <= 100 for mark in smarks):
+                            print("Each mark must be between 0 and 100.")
+                            continue
+                        break 
+                    except ValueError:
+                            print("Invalid input. Please enter only numbers separated by spaces.")             
                 smark=input()
                 spof=""
                 smarks=[float(x) for x in smark.split()]
                 sgrade,spof=grade(smarks)
-              s=Student(sname,sroll,smarks,sgrade,spof)
-              fw.write(f"{s.name} {s.roll} {' '.join(map(str, s.marks))} {s.grade} {s.pof}\n")
-
-              
+                s=Student(sname,sroll,smarks,sgrade,spof)
+                fw.write(f"{s.name} {s.roll} {' '.join(map(str, s.marks))} {s.grade} {s.pof}\n")
             else:
                 print("Written Successfully.")
 
