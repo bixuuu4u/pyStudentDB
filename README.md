@@ -2,10 +2,6 @@
 
 Basic student information system using Python.
 
-- Name,roll,mark[<100], error handeling dynamic grade and pass fail indicator
-
-- Menu driven
-
 - sort
   ->>with marks
   -> Asending Desending
