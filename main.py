@@ -1,4 +1,4 @@
-# Read
+# Rea
 # Write
 #FILENAME
 FILENAME ="pyStudentDB\data.txt"
