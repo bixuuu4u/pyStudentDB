@@ -27,7 +27,6 @@ def write():
                     sroll=input("Roll: ")
                     if not sroll:
                         print("Cannot Be Empty!!")             
-
                     elif not sroll.isalnum:
                         print("Roll should be alphanumeric only")
                     else:
@@ -89,10 +88,11 @@ def display(lines):
 
 def menu():
   while True:
-    EXIT=4
+    EXIT=5
     print("\n1.Read Data")
     print("2.Write Data")
     print("3.Read & Write Data")
+    print("4.Sort Data")
     print(f"{EXIT}.Exit")
     choice=int(input("Enter Your Choice: "))
     if choice == 1:
@@ -105,6 +105,9 @@ def menu():
     elif choice ==3:
         write()
         read()
+        check(EXIT)
+    elif choice ==4:
+        sort()
         check(EXIT)
 
     elif choice ==EXIT :
@@ -133,6 +136,53 @@ def grade(marks):
         return 'D',pof
     else:
         return 'F',pof
+def sort():
+    try:
+        with open(FILENAME, 'r') as fr:
+           lines = fr.readlines()
+
+        students=[]
+        for line in lines:
+            data=line.strip().split()
+            if len(data) <10:
+                continue
+            name=" ".join(data[:-9])
+            roll = data[-9]
+            marks = data[-8:-2]
+            try:
+                marks = list(map(float, data[-8:-2]))
+            except ValueError:
+                print(f"Invalid marks data for student {name}. Skipping.")
+                continue  
+            grade = data[-2]
+            pof = data[-1] 
+            students.append((name,roll,marks,grade,pof))
+
+        choice= int(input("Sort With [1.Roll/2.Marks]"))
+        order=int(input("[1.Asending/2.Desending]"))
+        
+        reverse = True if order == 2 else False
+        if choice ==1:
+            students.sort(key=lambda  x :x[1],reverse=reverse)
+            filename = "pyStudentDB\\SortedByRoll.txt"
+        elif choice==2:
+            students.sort(key=lambda x:sum(x[2]),reverse=reverse)
+            filename = "pyStudentDB\\SortedByMarks.txt"
+        else:
+            print("Invalid Sort Choice")
+
+        with open(filename,'w') as fw:
+            for s in students:
+                fw.write(f"{s[0]} {s[1]} {' '.join(map(str,s[2]))} {s[3]} {s[4]}\n")
+            else:
+                print(f"Sorted data written to: {filename}")
+
+    except FileNotFoundError:
+        print("Data file not found.")
+    except ValueError:
+        print("Invalid input.")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
 
 def check(EXIT):
     cs=(input(f"Press Any Key To Continue/{EXIT} To Exit."))
