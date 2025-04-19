@@ -14,24 +14,24 @@ def write():
             for i in range(WRITE_SIZE):
                 print(f"\nEnter Details for student {i+1}:")
                 while True:
-                    sname=input("Name: ")
-                    if sname:
-                        break
+                    sname=input("Name: ").strip()
+                    if not sname:
+                        print("Cannot Be Empty!!")
                     elif (len(sname))<4:
                         print("Name is too Short")
                     elif any(char.isdigit() for char in sname):
                         print("Name should not contain numbers.")
                     else:
-                        print("Cannot Be Empty!!")
+                        break
                 while True:
                     sroll=input("Roll: ")
-                    if sroll:
-                        break
+                    if not sroll:
+                        print("Cannot Be Empty!!")             
+
                     elif not sroll.isalnum:
                         print("Roll should be alphanumeric only")
                     else:
-                        print("Cannot Be Empty!!")             
-                
+                        break
                 smarks=[]
                 while True:
                     try:
@@ -46,9 +46,6 @@ def write():
                         break 
                     except ValueError:
                             print("Invalid input. Please enter only numbers separated by spaces.")             
-                smark=input()
-                spof=""
-                smarks=[float(x) for x in smark.split()]
                 sgrade,spof=grade(smarks)
                 s=Student(sname,sroll,smarks,sgrade,spof)
                 fw.write(f"{s.name} {s.roll} {' '.join(map(str, s.marks))} {s.grade} {s.pof}\n")
@@ -57,6 +54,8 @@ def write():
 
     except FileNotFoundError:
         print("File not found!")
+    except Exception as e:
+        print(f"Unexpected Error Occurred {e}")
 def read():
     try:
         with open(FILENAME, 'r') as fr:
@@ -115,7 +114,7 @@ def menu():
         print("Invalid Choice")
 
 def grade(marks):
-    print(marks)
+    # print(marks)
     sum=0
     for mark in marks:
         sum+=mark
