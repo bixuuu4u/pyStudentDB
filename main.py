@@ -39,21 +39,27 @@ def read():
             i=1
             for line in fr:
               data=line.strip().split()
-              sname=data[0]
-              sroll=data[1]
-              smarks=data[2:8]
+              sroll=data[-8]
+              smarks=data[-7:-1]
               sgrade=data[-1]
+              sname = " ".join(data[:-8])
+
               smarks = " ".join(smarks)
               # print(data,type(data))
+            #   print("-----------------------------------------------------")
+            #   print(f"SL NAME       ROLL PHY CHEM MATH IT ENG HINDI  GRADE")
+            #   print(f"{i} {sname}           {sroll} {smarks} {sgrade}")
+
               print(f"SL:{i} NAME:{sname} ROLL:{sroll} MARKS:{smarks} GRADE:{sgrade}")
               i+=1
     except FileNotFoundError:
         print("File not found!")
 
 def main():
-    write()
+    # write()
     read()
-
+def display():
+    print("--------------------------------------------")
 
 
 
