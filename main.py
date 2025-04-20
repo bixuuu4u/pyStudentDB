@@ -108,7 +108,27 @@ def menu():
         check(EXIT)
     elif choice ==4:
         sort()
-        check(EXIT)
+        while True:
+            cs= int(input(f"Display Sorted Data [1.Mark/2.Result/{EXIT}.Exit]"))
+            if cs ==1:
+                filename = "pyStudentDB\\SortedByRoll.txt"
+                try:
+                    with open(filename, 'r') as fr:
+                        lines = fr.readlines()
+                        display(lines)
+                except FileNotFoundError:
+                    print("File not found!")
+            if cs ==2:
+                filename = "pyStudentDB\\SortedByMarks.txt"
+                try:
+                    with open(filename, 'r') as fr:
+                        lines = fr.readlines()
+                        display(lines)
+                except FileNotFoundError:
+                    print("File not found!")
+            if cs==EXIT:
+                break
+            check(EXIT)
 
     elif choice ==EXIT :
         print("GoodBye...")
@@ -158,8 +178,8 @@ def sort():
             pof = data[-1] 
             students.append((name,roll,marks,grade,pof))
 
-        choice= int(input("Sort With [1.Roll/2.Marks]"))
-        order=int(input("[1.Asending/2.Desending]"))
+        choice= int(input("Sort With [1.Roll/2.Marks]: "))
+        order=int(input("[1.Asending/2.Desending]: "))
         
         reverse = True if order == 2 else False
         if choice ==1:
